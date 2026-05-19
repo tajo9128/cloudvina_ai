@@ -1,266 +1,379 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BioDockify Pharma Research AI</title>
-    <meta name="description" content="Autonomous agent-based research intelligence platform for pharmaceutical and life-science research" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: { slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' } }
-          }
-        }
-      }
-    </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-      body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
-      .group:hover .group-hover\:bg-indigo-600 { background-color: #4f46e5; }
-      .group:hover .group-hover\:text-white { color: #fff; }
-      .group:hover .group-hover\:bg-blue-600 { background-color: #2563eb; }
-      .group:hover .group-hover\:bg-purple-600 { background-color: #9333ea; }
-      .group:hover .group-hover\:bg-pink-600 { background-color: #db2777; }
-      .group:hover .group-hover\:bg-emerald-600 { background-color: #059669; }
-      .group:hover .group-hover\:bg-amber-600 { background-color: #d97706; }
-      .group:hover .group-hover\:border-indigo-200 { border-color: #c7d2fe; }
-      .group:hover .group-hover\:shadow-xl { box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BioDockify Pharma AI — AI Research Assistant for Pharmaceutical Sciences</title>
+<meta name="description" content="BioDockify Pharma AI is an AI-powered pharmaceutical research platform with 20 integrated modules, 4 specialized sub-agents, and persistent memory. Built on Agent Zero.">
+<link rel="icon" type="image/svg+xml" href="/brand/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:#050810;color:#8892B0;line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{max-width:100%}
+
+.site-header{position:fixed;top:0;left:0;right:0;z-index:100;transition:all .3s}
+.site-header.scrolled{background:rgba(5,8,16,0.95);backdrop-filter:blur(16px);box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.site-header:not(.scrolled){background:transparent}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:72px}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-logo img{height:40px;width:auto}
+.nav-links{display:flex;align-items:center;gap:4px}
+.nav-links a{font-size:13px;color:#94a3b8;font-weight:500;letter-spacing:.3px;text-transform:uppercase;transition:color .2s;padding:8px 12px;border-radius:8px;white-space:nowrap}
+.nav-links a:hover{color:#F0F4FF;background:rgba(255,255,255,0.05)}
+.nav-links .active{color:#6366f1}
+.nav-links .ai-badge{background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff !important;padding:6px 14px;border-radius:8px;font-weight:600;letter-spacing:.5px}
+.nav-links .ai-badge:hover{background:linear-gradient(135deg,#4f46e5,#4338ca);transform:translateY(-1px)}
+.nav-cta{display:flex;align-items:center;gap:12px}
+.btn-login{font-size:13px;color:#94a3b8;font-weight:500;transition:color .2s;text-transform:uppercase;letter-spacing:.3px}
+.btn-login:hover{color:#F0F4FF}
+.btn-start{padding:10px 22px;background:#4f46e5;color:#fff;border-radius:10px;font-size:13px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;transition:all .2s;border:none;cursor:pointer}
+.btn-start:hover{background:#4338ca;transform:translateY(-1px);box-shadow:0 4px 15px rgba(79,70,229,0.4)}
+.mobile-toggle{display:none;background:none;border:none;color:#94a3b8;cursor:pointer;padding:8px}
+.mobile-toggle svg{width:24px;height:24px}
+
+.stars{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4;
+background-image:radial-gradient(1px 1px at 10% 20%,rgba(255,255,255,.8),transparent),radial-gradient(1px 1px at 30% 60%,rgba(255,255,255,.6),transparent),radial-gradient(1.5px 1.5px at 50% 10%,rgba(255,255,255,.9),transparent),radial-gradient(1px 1px at 70% 40%,rgba(255,255,255,.5),transparent),radial-gradient(1px 1px at 90% 80%,rgba(255,255,255,.7),transparent),radial-gradient(1.5px 1.5px at 15% 85%,rgba(255,255,255,.6),transparent),radial-gradient(1px 1px at 45% 45%,rgba(255,255,255,.4),transparent),radial-gradient(1px 1px at 80% 15%,rgba(255,255,255,.8),transparent),radial-gradient(1.5px 1.5px at 25% 35%,rgba(255,255,255,.5),transparent),radial-gradient(1px 1px at 60% 75%,rgba(255,255,255,.7),transparent);
+animation:twinkle 4s ease-in-out infinite alternate}
+@keyframes twinkle{from{opacity:.35}to{opacity:.55}}
+.nebula{position:fixed;inset:0;z-index:0;pointer-events:none;
+background:radial-gradient(80% 50% at 20% 20%,rgba(79,70,229,.12),transparent 50%),radial-gradient(60% 60% at 80% 30%,rgba(99,102,241,.08),transparent 50%),radial-gradient(90% 70% at 50% 90%,rgba(79,70,229,.06),transparent 50%)}
+
+.container{max-width:860px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+.section{margin-bottom:56px}
+
+.hero{text-align:center;padding:140px 0 56px;animation:fadeInUp .8s ease-out}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.hero-icon{width:100px;height:100px;margin:0 auto 24px;animation:float 4s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.hero h1{font-size:clamp(36px,6vw,64px);font-weight:800;line-height:1.1;
+background:linear-gradient(135deg,#F0F4FF 0%,#4f46e5 52%,#6366f1 100%);background-size:200% 200%;
+-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+animation:gradientShift 6s ease infinite;margin-bottom:16px}
+@keyframes gradientShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.hero-tagline{font-size:16px;color:#4f46e5;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:16px}
+.hero-desc{font-size:17px;color:#8892B0;max-width:680px;margin:0 auto 32px;line-height:1.7}
+.hero-badges{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:32px}
+.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(10,15,26,.8);border:1px solid rgba(136,146,176,.15);border-radius:20px;padding:6px 14px;font-size:13px;color:#8892B0}
+.dot{width:6px;height:6px;border-radius:50%}
+.dot-green{background:#22c55e}.dot-blue{background:#4f46e5}.dot-amber{background:#f59e0b}
+.hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:12px;font-size:15px;font-weight:600;transition:all .2s;cursor:pointer;border:none}
+.btn-primary{background:#4f46e5;color:#fff}
+.btn-primary:hover{background:#4338ca;transform:translateY(-1px)}
+.btn-ghost{background:rgba(10,15,26,.65);color:#F0F4FF;border:1px solid rgba(136,146,176,.15)}
+.btn-ghost:hover{border-color:rgba(136,146,176,.3);transform:translateY(-1px)}
+
+.code-block{background:#111827;border:1px solid rgba(136,146,176,.15);border-radius:12px;overflow:hidden}
+.code-header{background:rgba(0,0,0,.3);border-bottom:1px solid rgba(136,146,176,.15);padding:12px 16px;display:flex;align-items:center;gap:12px}
+.dots{display:flex;gap:6px}
+.dots span{width:10px;height:10px;border-radius:50%}
+.dot-r{background:#ef4444}.dot-y{background:#eab308}.dot-g{background:#22c55e}
+.code-content{padding:20px 24px;font-family:'SF Mono','Fira Code',monospace;font-size:14px;line-height:1.8;color:#e2e8f0;overflow-x:auto}
+.code-content .comment{color:#6b7280}
+.code-content .prompt{color:#4f46e5}
+.code-content .cmd{color:#22c55e}
+.code-content .flag{color:#f59e0b}
+.code-content .string{color:#a78bfa}
+
+.section-title{font-size:22px;font-weight:700;color:#F0F4FF;margin-bottom:24px;display:flex;align-items:center;gap:10px}
+.section-title .accent{color:#4f46e5;font-family:monospace}
+
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.feature-card{background:rgba(10,15,26,.65);border:1px solid rgba(136,146,176,.15);border-radius:14px;padding:24px;backdrop-filter:blur(12px);transition:border-color .3s,transform .2s}
+.feature-card:hover{border-color:rgba(79,70,229,.4);transform:translateY(-2px)}
+.feature-icon{width:44px;height:44px;border-radius:10px;background:rgba(79,70,229,.15);display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:22px}
+.feature-card h3{font-size:16px;font-weight:600;color:#F0F4FF;margin-bottom:8px}
+.feature-card p{font-size:13.5px;color:#5A6480;line-height:1.6}
+
+.modules-table{width:100%;border-collapse:collapse;font-size:14px}
+.modules-table th{text-align:left;padding:12px 16px;color:#F0F4FF;font-weight:600;border-bottom:1px solid rgba(136,146,176,.15);font-size:13px;text-transform:uppercase;letter-spacing:.5px}
+.modules-table td{padding:10px 16px;border-bottom:1px solid rgba(136,146,176,.08)}
+.modules-table tr:hover td{background:rgba(79,70,229,.05)}
+.modules-table .mod-name{color:#F0F4FF;font-weight:600}
+.modules-table .mod-backend{color:#4f46e5;font-size:12px}
+
+.agents-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
+.agent-card{background:rgba(10,15,26,.65);border:1px solid rgba(136,146,176,.15);border-radius:14px;padding:24px;text-align:center;transition:border-color .3s,transform .2s}
+.agent-card:hover{border-color:rgba(79,70,229,.4);transform:translateY(-2px)}
+.agent-emoji{font-size:36px;margin-bottom:12px}
+.agent-card h3{font-size:16px;font-weight:600;color:#F0F4FF;margin-bottom:6px}
+.agent-card p{font-size:13px;color:#5A6480}
+
+.workflow-diagram{background:rgba(10,15,26,.65);border:1px solid rgba(136,146,176,.15);border-radius:14px;padding:32px;text-align:center;font-family:'SF Mono',monospace;font-size:14px;color:#8892B0;line-height:2;overflow-x:auto}
+.workflow-diagram .highlight{color:#4f46e5;font-weight:600}
+
+.persist-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.persist-item{background:rgba(10,15,26,.65);border:1px solid rgba(136,146,176,.15);border-radius:12px;padding:16px;display:flex;align-items:center;gap:12px}
+.persist-item .icon{font-size:24px}
+.persist-item .info h4{font-size:14px;color:#F0F4FF;font-weight:600}
+.persist-item .info p{font-size:12px;color:#5A6480}
+
+.cta-section{text-align:center;padding:48px 0}
+.cta-section h2{font-size:32px;font-weight:800;color:#F0F4FF;margin-bottom:12px}
+.cta-section p{font-size:16px;color:#8892B0;margin-bottom:32px}
+.cta-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+
+.site-footer{background:#0f172a;border-top:1px solid rgba(136,146,176,.1);padding:64px 0 32px;margin-top:56px}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1.5fr;gap:48px;margin-bottom:48px}
+.footer-brand p{font-size:14px;color:#64748b;line-height:1.7;margin-top:16px;max-width:280px}
+.footer-col h3{color:#F0F4FF;font-weight:600;font-size:14px;margin-bottom:16px;text-transform:uppercase;letter-spacing:.5px}
+.footer-col ul{list-style:none;padding:0}
+.footer-col li{margin-bottom:10px}
+.footer-col a{font-size:14px;color:#64748b;transition:color .2s}
+.footer-col a:hover{color:#818cf8}
+.footer-bottom{border-top:1px solid #1e293b;padding-top:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.footer-bottom p{font-size:13px;color:#475569}
+.footer-bottom-links{display:flex;gap:24px}
+.footer-bottom-links a{font-size:13px;color:#475569;transition:color .2s}
+.footer-bottom-links a:hover{color:#818cf8}
+
+.mobile-menu{display:none;position:fixed;top:72px;left:0;right:0;background:rgba(15,23,42,.98);backdrop-filter:blur(16px);border-bottom:1px solid rgba(136,146,176,.1);padding:16px 24px;z-index:99}
+.mobile-menu.open{display:block}
+.mobile-menu a{display:block;padding:12px 0;font-size:14px;color:#94a3b8;border-bottom:1px solid rgba(136,146,176,.08)}
+.mobile-menu a:last-child{border:none}
+.mobile-menu a:hover{color:#F0F4FF}
+.mobile-menu .ai-link{color:#818cf8;font-weight:600}
+
+@media(max-width:768px){
+  .nav-links,.nav-cta{display:none}
+  .mobile-toggle{display:block}
+  .hero h1{font-size:32px}
+  .features-grid{grid-template-columns:1fr}
+  .agents-grid{grid-template-columns:1fr 1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+</style>
 </head>
-<body class="min-h-screen bg-white font-sans text-slate-900">
+<body>
 
-<!-- Hero -->
-<div class="relative overflow-hidden bg-slate-900 text-white">
-    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-20"></div>
-    <div class="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/90 to-transparent"></div>
-    <div class="relative max-w-7xl mx-auto px-6 py-24 lg:py-32">
-        <div class="max-w-3xl">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 text-sm font-medium mb-6">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"/><path d="M12 6v6l4 2"/></svg>
-                <span>BioDockify Pharma Research AI</span>
-            </div>
-            <h1 class="text-5xl lg:text-7xl font-bold tracking-tight mb-8">
-                Where AI becomes a <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">research collaborator</span>, not just a tool.
-            </h1>
-        </div>
-    </div>
-</div>
+<div class="stars"></div>
+<div class="nebula"></div>
 
-<!-- Overview -->
-<section class="py-20 px-6 max-w-7xl mx-auto">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-        <div>
-            <h2 class="text-3xl lg:text-4xl font-bold mb-6">Overview</h2>
-            <p class="text-lg text-slate-600 leading-relaxed mb-6">
-                BioDockify Pharma Research AI is an autonomous, agent-based research intelligence platform designed to support pharmaceutical and life-science research from ideation to thesis-ready outputs.
-            </p>
-            <p class="text-lg text-slate-600 leading-relaxed mb-6">
-                Unlike conventional AI tools that assist isolated tasks, BioDockify functions as a persistent research assistant, capable of planning, executing, validating, and documenting complex pharmaceutical research workflows—all with human-in-the-loop scientific oversight.
-            </p>
-            <p class="text-lg text-slate-600 leading-relaxed">
-                The platform is built on <strong>Agent Zero orchestration principles</strong>, Docker-based execution, and evidence-constrained AI reasoning, making it ideal for PhD research, academic labs, and early-stage drug discovery teams.
-            </p>
-        </div>
-        <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100">
-            <h3 class="text-xl font-bold mb-6 text-slate-800">Why BioDockify?</h3>
-            <ul class="space-y-4">
-                <li class="flex items-start gap-3"><span class="mt-1 p-1 rounded-full bg-red-100 text-red-600"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span><span class="text-slate-600">Fragmented tools and workflows</span></li>
-                <li class="flex items-start gap-3"><span class="mt-1 p-1 rounded-full bg-red-100 text-red-600"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span><span class="text-slate-600">Manual, time-intensive literature reviews</span></li>
-                <li class="flex items-start gap-3"><span class="mt-1 p-1 rounded-full bg-red-100 text-red-600"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span><span class="text-slate-600">Weak integration between AI outputs and scientific writing</span></li>
-                <li class="flex items-start gap-3"><span class="mt-1 p-1 rounded-full bg-red-100 text-red-600"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span><span class="text-slate-600">Limited reproducibility</span></li>
-                <li class="flex items-start gap-3"><span class="mt-1 p-1 rounded-full bg-red-100 text-red-600"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span><span class="text-slate-600">High software costs</span></li>
-            </ul>
-            <div class="mt-8 p-4 bg-indigo-50 rounded-xl border border-indigo-100 text-indigo-900 font-medium">
-                BioDockify addresses these challenges by modeling pharmaceutical research as an <strong>autonomous reasoning process</strong> rather than a static pipeline.
-            </div>
-        </div>
+<header class="site-header" id="siteHeader">
+  <nav class="nav-inner">
+    <a href="https://www.biodockify.com" class="nav-logo">
+      <img src="/brand/logo.svg" alt="BioDockify">
+    </a>
+    <div class="nav-links">
+      <a href="https://www.biodockify.com">Home</a>
+      <a href="https://www.biodockify.com/molecular-docking-online">Features</a>
+      <a href="https://www.biodockify.com/pricing">Pricing</a>
+      <a href="https://www.biodockify.com/tools">Tools</a>
+      <a href="https://ai.biodockify.com" class="ai-badge active">AI</a>
+      <a href="https://www.biodockify.com/contact">Contact</a>
+      <a href="https://www.biodockify.com/dashboard">Dashboard</a>
     </div>
+    <div class="nav-cta">
+      <a href="https://www.biodockify.com/login" class="btn-login">Log In</a>
+      <a href="https://www.biodockify.com/dock/batch" class="btn-start">Start Docking</a>
+    </div>
+    <button class="mobile-toggle" onclick="document.getElementById('mobileMenu').classList.toggle('open')">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="https://www.biodockify.com">Home</a>
+    <a href="https://www.biodockify.com/molecular-docking-online">Features</a>
+    <a href="https://www.biodockify.com/pricing">Pricing</a>
+    <a href="https://www.biodockify.com/tools">Tools</a>
+    <a href="https://ai.biodockify.com" class="ai-link">AI Research &#8594;</a>
+    <a href="https://www.biodockify.com/contact">Contact</a>
+    <a href="https://www.biodockify.com/dashboard">Dashboard</a>
+    <a href="https://www.biodockify.com/dock/batch" style="color:#6366f1;font-weight:600">Start Docking</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <img src="/brand/icon.svg" alt="BioDockify Pharma AI" class="hero-icon">
+    <h1>BioDockify Pharma AI</h1>
+    <p class="hero-tagline">AI Research Assistant for Pharmaceutical Sciences</p>
+    <p class="hero-desc">20 integrated research modules. 4 specialized sub-agents. Persistent memory across your entire PhD. Molecular docking, statistical analysis, literature review, and academic writing — all in one platform.</p>
+    <div class="hero-badges">
+      <span class="badge"><span class="dot dot-green"></span> Docker Ready</span>
+      <span class="badge"><span class="dot dot-blue"></span> v5.9.3</span>
+      <span class="badge"><span class="dot dot-amber"></span> 20 Modules</span>
+    </div>
+    <div class="hero-actions">
+      <a href="#quickstart" class="btn btn-primary">&#9889; Get Started</a>
+      <a href="https://github.com/tajo9128/BioDockify-Pharma-AI" target="_blank" class="btn btn-ghost">View on GitHub &#8594;</a>
+    </div>
+  </div>
 </section>
 
-<!-- Comparison -->
-<section class="py-20 bg-slate-50 border-y border-slate-200">
-    <div class="max-w-7xl mx-auto px-6">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl lg:text-4xl font-bold mb-4">What Makes BioDockify Different?</h2>
-            <p class="text-slate-600">A fundamental shift from tool-centric to reasoning-centric research.</p>
-        </div>
-        <div class="overflow-x-auto">
-            <table class="w-full bg-white rounded-2xl shadow-sm">
-                <thead class="bg-slate-900 text-white">
-                    <tr>
-                        <th class="py-5 px-8 text-left text-lg rounded-tl-2xl">Traditional Tools</th>
-                        <th class="py-5 px-8 text-left text-lg bg-indigo-600 rounded-tr-2xl">BioDockify Pharma Research AI</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-100">
-                    <tr class="hover:bg-slate-50/50"><td class="py-5 px-8 text-slate-500 font-medium">Manual workflows</td><td class="py-5 px-8 text-indigo-900 font-bold bg-indigo-50/10">Autonomous agent-driven workflows</td></tr>
-                    <tr class="hover:bg-slate-50/50"><td class="py-5 px-8 text-slate-500 font-medium">Tool-centric</td><td class="py-5 px-8 text-indigo-900 font-bold bg-indigo-50/10">Reasoning-centric</td></tr>
-                    <tr class="hover:bg-slate-50/50"><td class="py-5 px-8 text-slate-500 font-medium">Static analysis</td><td class="py-5 px-8 text-indigo-900 font-bold bg-indigo-50/10">Iterative self-correcting research</td></tr>
-                    <tr class="hover:bg-slate-50/50"><td class="py-5 px-8 text-slate-500 font-medium">Black-box AI</td><td class="py-5 px-8 text-indigo-900 font-bold bg-indigo-50/10">Evidence-constrained AI</td></tr>
-                    <tr class="hover:bg-slate-50/50"><td class="py-5 px-8 text-slate-500 font-medium">Task-level output</td><td class="py-5 px-8 text-indigo-900 font-bold bg-indigo-50/10">Thesis- and publication-level output</td></tr>
-                </tbody>
-            </table>
-        </div>
+<section class="section" id="quickstart">
+  <div class="container">
+    <h2 class="section-title"><span class="accent">&#10217;</span> Quick Start</h2>
+    <div class="code-block">
+      <div class="code-header"><div class="dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div></div>
+      <div class="code-content">
+        <span class="comment"># The -v flag is REQUIRED. Without it, ALL data is lost on container delete.</span><br>
+        <span class="prompt">$</span> <span class="cmd">docker run</span> <span class="flag">-d</span> <span class="flag">-p</span> 50001:50001 <span class="flag">--name</span> biodockify-pharma \<br>
+        &nbsp;&nbsp;<span class="flag">-v</span> <span class="string">biodockify_pharma_usr:/a0/usr</span> \<br>
+        &nbsp;&nbsp;tajo9128/biodockify-pharma-ai:latest<br><br>
+        <span class="comment"># Visit http://localhost:3000</span>
+      </div>
     </div>
+  </div>
 </section>
 
-<!-- Core Capabilities -->
-<section class="py-20 px-6 max-w-7xl mx-auto">
-    <h2 class="text-4xl font-bold text-center mb-16">Core Capabilities</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-        <div class="p-8 rounded-3xl border border-slate-200 hover:border-indigo-200 hover:shadow-xl hover:shadow-indigo-500/5 transition-all bg-white group">
-            <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-indigo-600 group-hover:text-white">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"/><path d="M12 6v6l4 2"/></svg>
-            </div>
-            <h3 class="text-xl font-bold mb-3">1. Autonomous Research Planning</h3>
-            <p class="text-slate-600 text-sm mb-4">Powered by Agent Zero, BioDockify acts like a junior researcher.</p>
-            <ul class="space-y-2 text-sm text-slate-500">
-                <li class="flex gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg> Decomposes goals into tasks</li>
-                <li class="flex gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg> Selects tools automatically</li>
-                <li class="flex gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg> Executes in controlled sandbox</li>
-            </ul>
-        </div>
-
-        <div class="p-8 rounded-3xl border border-slate-200 hover:border-indigo-200 hover:shadow-xl hover:shadow-indigo-500/5 transition-all bg-white group">
-            <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:text-white">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            </div>
-            <h3 class="text-xl font-bold mb-3">2. Evidence-First Literature</h3>
-            <p class="text-slate-600 text-sm mb-4">Systematic analysis of PubMed, OpenAlex, and more.</p>
-            <ul class="space-y-2 text-sm text-slate-500">
-                <li class="flex gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg> Automated harvesting</li>
-                <li class="flex gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg> Structure-aware PDF parsing</li>
-                <li class="flex gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg> Temporal trend analysis</li>
-            </ul>
-        </div>
-
-        <div class="p-8 rounded-3xl border border-slate-200 hover:border-indigo-200 hover:shadow-xl hover:shadow-indigo-500/5 transition-all bg-white group">
-            <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-purple-600 group-hover:text-white">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-            </div>
-            <h3 class="text-xl font-bold mb-3">3. Research Theme Discovery</h3>
-            <p class="text-slate-600 text-sm mb-4">Quantify novelty and avoid redundant research.</p>
-            <ul class="space-y-2 text-sm text-slate-500">
-                <li class="flex gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg> Semantic embedding</li>
-                <li class="flex gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg> Concept clustering</li>
-                <li class="flex gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg> Emerging theme detection</li>
-            </ul>
-        </div>
-
-        <div class="p-8 rounded-3xl border border-slate-200 hover:border-indigo-200 hover:shadow-xl hover:shadow-indigo-500/5 transition-all bg-white group">
-            <div class="w-12 h-12 bg-pink-100 text-pink-600 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-pink-600 group-hover:text-white">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/><line x1="12" y1="22" x2="12" y2="15.5"/><polyline points="22 8.5 12 15.5 2 8.5"/></svg>
-            </div>
-            <h3 class="text-xl font-bold mb-3">4. Gap & Novelty Analysis</h3>
-            <p class="text-slate-600 text-sm mb-4">Quantitative scoring for your research proposals.</p>
-            <ul class="space-y-2 text-sm text-slate-500">
-                <li class="flex gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg> Drug-Target gap detection</li>
-                <li class="flex gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg> Risk-feasibility assessment</li>
-                <li class="flex gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg> Perfect for PhD proposals</li>
-            </ul>
-        </div>
-
-        <div class="p-8 rounded-3xl border border-slate-200 hover:border-indigo-200 hover:shadow-xl hover:shadow-indigo-500/5 transition-all bg-white group">
-            <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-emerald-600 group-hover:text-white">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-            </div>
-            <h3 class="text-xl font-bold mb-3">5. Knowledge Graph Reasoning</h3>
-            <p class="text-slate-600 text-sm mb-4">Links drugs, genes, and diseases to infer mechanisms.</p>
-            <ul class="space-y-2 text-sm text-slate-500">
-                <li class="flex gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg> Graph-based inference</li>
-                <li class="flex gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg> Explains results beyond scores</li>
-                <li class="flex gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg> Hypothesis generation</li>
-            </ul>
-        </div>
-
-        <div class="p-8 rounded-3xl border border-slate-200 hover:border-indigo-200 hover:shadow-xl hover:shadow-indigo-500/5 transition-all bg-white group">
-            <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-amber-600 group-hover:text-white">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-            </div>
-            <h3 class="text-xl font-bold mb-3">6. Thesis & Publication Ready</h3>
-            <p class="text-slate-600 text-sm mb-4">Controlled AI synthesis traceable to citations.</p>
-            <ul class="space-y-2 text-sm text-slate-500">
-                <li class="flex gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg> DOCX & LaTeX support</li>
-                <li class="flex gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg> BibTeX reference management</li>
-                <li class="flex gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg> Zero hallucination (Evidence-bounded)</li>
-            </ul>
-        </div>
+<section class="section" id="features">
+  <div class="container">
+    <h2 class="section-title"><span class="accent">&#10217;</span> Why BioDockify Pharma AI</h2>
+    <div class="features-grid">
+      <div class="feature-card"><div class="feature-icon">&#129516;</div><h3>Molecular Docking</h3><p>AutoDock Vina integration. PDB + SMILES input, binding energy poses, ADMET profiling, chemical space PCA.</p></div>
+      <div class="feature-card"><div class="feature-icon">&#128202;</div><h3>70+ Statistical Methods</h3><p>Descriptive, t-test, ANOVA, survival analysis, PK/PD modeling, power analysis — all built in.</p></div>
+      <div class="feature-card"><div class="feature-icon">&#128218;</div><h3>Literature Intelligence</h3><p>PubMed, Semantic Scholar, arXiv. PRISMA screening, BioNER, automated alerts for new papers.</p></div>
+      <div class="feature-card"><div class="feature-icon">&#9997;&#65039;</div><h3>Academic Writer</h3><p>Literature reviews, research papers, theses, lecture notes, and presentation slides — 5 writing modes.</p></div>
+      <div class="feature-card"><div class="feature-icon">&#129504;</div><h3>Persistent Memory</h3><p>FAISS vector DB stores conversations, solutions, and facts. Survives container deletion with volume mount.</p></div>
+      <div class="feature-card"><div class="feature-icon">&#128044;</div><h3>Docker Native</h3><p>One command to run. Data persists forever with Docker volumes. No installation required.</p></div>
     </div>
+  </div>
 </section>
 
-<!-- Tech Stack -->
-<section class="py-20 bg-slate-900 text-white">
-    <div class="max-w-7xl mx-auto px-6">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
-            <div>
-                <h2 class="text-3xl font-bold mb-8">Technology Stack</h2>
-                <div class="space-y-6">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-800 pb-4"><span class="text-slate-400 font-medium">Agent Orchestration</span><span class="text-indigo-300 font-mono mt-1 sm:mt-0">Agent Zero architecture</span></div>
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-800 pb-4"><span class="text-slate-400 font-medium">Execution Environment</span><span class="text-indigo-300 font-mono mt-1 sm:mt-0">Docker-based sandbox</span></div>
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-800 pb-4"><span class="text-slate-400 font-medium">Databases</span><span class="text-indigo-300 font-mono mt-1 sm:mt-0">Prisma (metadata), Neo4j (graph)</span></div>
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-800 pb-4"><span class="text-slate-400 font-medium">AI Models</span><span class="text-indigo-300 font-mono mt-1 sm:mt-0">Free-tier reasoning APIs (No GPU needed)</span></div>
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-800 pb-4"><span class="text-slate-400 font-medium">Data Sources</span><span class="text-indigo-300 font-mono mt-1 sm:mt-0">PubMed, Europe PMC, OpenAlex, CrossRef</span></div>
-                </div>
-            </div>
-            <div>
-                <h2 class="text-3xl font-bold mb-8">Ethical & Academic Compliance</h2>
-                <p class="text-slate-400 leading-relaxed mb-6">
-                    BioDockify is designed from the ground up to support academic integrity. The platform assists research but does not replace scientific judgment.
-                </p>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div class="flex items-center gap-3 p-4 bg-slate-800 rounded-xl">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                        <span class="text-sm font-medium">Human-in-the-loop control</span>
-                    </div>
-                    <div class="flex items-center gap-3 p-4 bg-slate-800 rounded-xl">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                        <span class="text-sm font-medium">Transparent reasoning logs</span>
-                    </div>
-                    <div class="flex items-center gap-3 p-4 bg-slate-800 rounded-xl">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                        <span class="text-sm font-medium">Reproducible execution</span>
-                    </div>
-                    <div class="flex items-center gap-3 p-4 bg-slate-800 rounded-xl">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                        <span class="text-sm font-medium">Academic safeguards</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section class="section" id="modules">
+  <div class="container">
+    <h2 class="section-title"><span class="accent">&#10217;</span> 20 Integrated Research Modules</h2>
+    <div style="overflow-x:auto">
+      <table class="modules-table">
+        <thead><tr><th>#</th><th>Module</th><th>Function</th><th>Backend</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td class="mod-name">Research Command Center</td><td>Auto-research pipeline, thesis tracking, wet lab coordination</td><td class="mod-backend">23 REST endpoints</td></tr>
+          <tr><td>2</td><td class="mod-name">Molecular Toolkit</td><td>ADMET, Tanimoto similarity, chemical space PCA, AutoDock Vina</td><td class="mod-backend">RDKit + Vina</td></tr>
+          <tr><td>3</td><td class="mod-name">Statistics</td><td>70+ methods: descriptive, t-test, ANOVA, survival, PK/PD</td><td class="mod-backend">FastAPI router</td></tr>
+          <tr><td>4</td><td class="mod-name">Drug Properties</td><td>MW, LogP, HBD, HBA, TPSA, Lipinski Rule-of-5</td><td class="mod-backend">RDKit</td></tr>
+          <tr><td>5</td><td class="mod-name">Literature</td><td>PubMed/Semantic Scholar/arXiv + PRISMA + BioNER</td><td class="mod-backend">3 DB + bio_ner</td></tr>
+          <tr><td>6</td><td class="mod-name">Academic Writer</td><td>Literature Review, Research Paper, Thesis, Lecture, Slides</td><td class="mod-backend">Thesis + Lecture APIs</td></tr>
+          <tr><td>7</td><td class="mod-name">Faculty CMD</td><td>Syllabus parser, lecture/assignment generator, plagiarism check</td><td class="mod-backend">faculty_tools</td></tr>
+          <tr><td>8</td><td class="mod-name">Grant Writer</td><td>Full grant proposals: abstract, aims, methods, budget</td><td class="mod-backend">Agent-driven</td></tr>
+          <tr><td>9</td><td class="mod-name">Journal Finder</td><td>Verify legitimacy (Scopus/WoS/SCImago/DOAJ)</td><td class="mod-backend">8 data sources</td></tr>
+          <tr><td>10</td><td class="mod-name">Citation Manager</td><td>APA/Nature/AMA/Vancouver/BibTeX export</td><td class="mod-backend">localStorage</td></tr>
+          <tr><td>11</td><td class="mod-name">Regulatory</td><td>FDA/EMA guideline search + NDA/ANDA/MAA checklists</td><td class="mod-backend">FDA API</td></tr>
+          <tr><td>12</td><td class="mod-name">Slides Generator</td><td>Academic, Clinical, Corporate, Minimal styles</td><td class="mod-backend">Slides API</td></tr>
+          <tr><td>13</td><td class="mod-name">Lecture Builder</td><td>Learning objectives, sections, homework, lab practical</td><td class="mod-backend">Lecture API</td></tr>
+          <tr><td>14</td><td class="mod-name">Wet Lab Manager</td><td>Experiment tracking, protocols, notes, status</td><td class="mod-backend">localStorage + API</td></tr>
+          <tr><td>15</td><td class="mod-name">Research Notebook</td><td>ChromaDB vector search, tags, favorites, knowledge graph</td><td class="mod-backend">Knowledge API</td></tr>
+          <tr><td>16</td><td class="mod-name">System Health</td><td>Internet, ChromaDB, RDKit, Disk, Memory monitoring</td><td class="mod-backend">Connection Doctor</td></tr>
+          <tr><td>17</td><td class="mod-name">Backup &amp; Recovery</td><td>Docker volume + GDrive cloud backup</td><td class="mod-backend">Backup API</td></tr>
+          <tr><td>18</td><td class="mod-name">Kali Desktop</td><td>Full Linux desktop environment</td><td class="mod-backend">/desktop/session</td></tr>
+          <tr><td>19</td><td class="mod-name">Docking Studio</td><td>AutoDock Vina: PDB + SMILES &#8594; binding energy poses</td><td class="mod-backend">docking_prepare/run</td></tr>
+          <tr><td>20</td><td class="mod-name">All Tools</td><td>Quick-launch grid for all modules</td><td class="mod-backend">N/A</td></tr>
+        </tbody>
+      </table>
     </div>
+  </div>
 </section>
 
-<!-- CTA -->
-<section class="py-24 max-w-5xl mx-auto px-6 text-center">
-    <h2 class="text-4xl lg:text-5xl font-bold mb-6">Start Your Autonomous Research Journey</h2>
-    <p class="text-xl text-slate-500 mb-10 max-w-2xl mx-auto">
-        Transform your pharmaceutical research from a fragmented, manual process into an automated, intellectually rigorous workflow.
-    </p>
-    <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
-        <a href="https://github.com/tajo9128/BioDockify-pharma-research-ai/releases/latest" target="_blank" rel="noopener noreferrer" class="px-10 py-5 bg-indigo-600 text-white rounded-full font-bold text-lg hover:bg-indigo-700 transition-all shadow-xl hover:shadow-2xl inline-flex items-center gap-3">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Download Latest Release
-        </a>
-        <a href="/contact" class="px-10 py-5 bg-white text-slate-700 border border-slate-200 rounded-full font-bold text-lg hover:bg-slate-50 transition-all">Contact Sales</a>
+<section class="section" id="agents">
+  <div class="container">
+    <h2 class="section-title"><span class="accent">&#10217;</span> 4 Specialized Sub-Agents</h2>
+    <div class="agents-grid">
+      <div class="agent-card"><div class="agent-emoji">&#128300;</div><h3>Researcher</h3><p>Deep research, literature synthesis, drug discovery</p></div>
+      <div class="agent-card"><div class="agent-emoji">&#128200;</div><h3>Biostatistician</h3><p>Statistical analysis, clinical trials, PK/PD modeling</p></div>
+      <div class="agent-card"><div class="agent-emoji">&#128221;</div><h3>Writer</h3><p>Academic writing, thesis, papers, slides, lectures</p></div>
+      <div class="agent-card"><div class="agent-emoji">&#128187;</div><h3>Hacker</h3><p>Code execution, web scraping, automation</p></div>
     </div>
-    <div class="mt-8 flex items-center justify-center gap-2 text-sm text-slate-400">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
-        <span>Compatible with Windows, macOS, Linux</span>
-    </div>
+  </div>
 </section>
 
-<!-- Footer -->
-<footer class="py-12 bg-slate-50 border-t border-slate-200 text-center text-sm text-slate-400">
-    <div class="max-w-7xl mx-auto px-6">
-        <p>&copy; 2025 BioDockify Pharma Research AI. All rights reserved.</p>
-        <a href="https://www.biodockify.com" class="text-indigo-600 hover:underline mt-2 inline-block">biodockify.com</a>
+<section class="section">
+  <div class="container">
+    <h2 class="section-title"><span class="accent">&#10217;</span> Research Workflow</h2>
+    <div class="workflow-diagram">
+      <span class="highlight">User Request</span><br>&#8595;<br>
+      <span class="highlight">Agent0</span> <span style="color:#5A6480">(Main Orchestrator)</span><br>&#8595;<br>
+      &#9500;&#8594; <span class="highlight">Researcher</span> &#8594; Hacker (if blocked)<br>
+      &#9474;&#9474;&#9474;&#9474;&#9474;&#9474;&#9474;&#9474;&#9474;&#9474;&#8595;<br>
+      &#9474;&#9474;&#9474;&#9474;&#9474;Biostatistician (stats)<br>
+      &#9474;&#9474;&#9474;&#9474;&#9474;&#9474;&#9474;&#9474;&#9474;&#9474;&#8595;<br>
+      &#9492;&#8594; <span class="highlight">Writer</span> (output)
     </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2 class="section-title"><span class="accent">&#10217;</span> Your Data Persists Forever</h2>
+    <div class="persist-grid">
+      <div class="persist-item"><div class="icon">&#129504;</div><div class="info"><h4>Memory</h4><p>FAISS vector DB</p></div></div>
+      <div class="persist-item"><div class="icon">&#128172;</div><div class="info"><h4>Chat History</h4><p>All conversations</p></div></div>
+      <div class="persist-item"><div class="icon">&#9881;&#65039;</div><div class="info"><h4>Settings</h4><p>Your preferences</p></div></div>
+      <div class="persist-item"><div class="icon">&#128273;</div><div class="info"><h4>API Keys</h4><p>Secure storage</p></div></div>
+      <div class="persist-item"><div class="icon">&#128218;</div><div class="info"><h4>Knowledge Base</h4><p>Your research</p></div></div>
+      <div class="persist-item"><div class="icon">&#128193;</div><div class="info"><h4>Projects</h4><p>All your work</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <h2>Ready to Transform Your Research?</h2>
+    <p>Start using BioDockify Pharma AI in under 2 minutes with Docker.</p>
+    <div class="cta-actions">
+      <a href="#quickstart" class="btn btn-primary">&#9889; Install Now</a>
+      <a href="https://github.com/tajo9128/BioDockify-Pharma-AI" target="_blank" class="btn btn-ghost">&#11088; Star on GitHub</a>
+      <a href="https://hub.docker.com/r/tajo9128/biodockify-pharma-ai" target="_blank" class="btn btn-ghost">&#128044; Docker Hub</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="https://www.biodockify.com"><img src="/brand/logo.svg" alt="BioDockify" style="height:48px;filter:brightness(0) invert(1);opacity:.9"></a>
+        <p>Accelerating drug discovery with AI-powered molecular docking and analysis tools. Zero-cost, open-source, and accessible to everyone.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Platform</h3>
+        <ul>
+          <li><a href="https://www.biodockify.com/tools">Tools</a></li>
+          <li><a href="https://www.biodockify.com/tools/benchmarking">Benchmarking</a></li>
+          <li><a href="https://www.biodockify.com/pricing">Pricing (Free)</a></li>
+          <li><a href="https://www.biodockify.com/dashboard">Dashboard</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Resources</h3>
+        <ul>
+          <li><a href="https://github.com/tajo9128/cloudvina" target="_blank">GitHub</a></li>
+          <li><a href="https://www.biodockify.com/support">Support</a></li>
+          <li><a href="https://www.biodockify.com/about">About</a></li>
+          <li><a href="https://github.com/tajo9128/BioDockify-Pharma-AI" target="_blank">Pharma AI Docs</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>AI Research</h3>
+        <ul>
+          <li><a href="https://ai.biodockify.com">Pharma AI Home</a></li>
+          <li><a href="https://github.com/tajo9128/BioDockify-Pharma-AI" target="_blank">GitHub Repo</a></li>
+          <li><a href="https://hub.docker.com/r/tajo9128/biodockify-pharma-ai" target="_blank">Docker Hub</a></li>
+          <li><a href="https://github.com/tajo9128/BioDockify-Pharma-AI/issues" target="_blank">Report Issue</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 BioDockify. Open Source (MIT License).</p>
+      <div class="footer-bottom-links">
+        <a href="https://www.biodockify.com/privacy">Privacy Policy</a>
+        <a href="https://www.biodockify.com/refund-policy">Refund Policy</a>
+        <a href="https://www.biodockify.com/terms">Terms of Service</a>
+      </div>
+    </div>
+  </div>
 </footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  document.getElementById('siteHeader').classList.toggle('scrolled',window.scrollY>20);
+});
+</script>
 
 </body>
 </html>
