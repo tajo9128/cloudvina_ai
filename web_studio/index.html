@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BioDockify Studio AI — AI-Powered Autonomous Drug Discovery Platform</title>
+<meta name="description" content="BioDockify Studio AI is an AI-powered drug discovery platform with 19 integrated modules, 7 specialized AI crews, and smart energy-based docking. Built on AutoDock Vina, GNINA, and RF Score.">
+<link rel="icon" type="image/svg+xml" href="/brand/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:#050810;color:#8892B0;line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{max-width:100%}
+
+.site-header{position:fixed;top:0;left:0;right:0;z-index:100;transition:all .3s}
+.site-header.scrolled{background:rgba(5,8,16,0.95);backdrop-filter:blur(16px);box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.site-header:not(.scrolled){background:transparent}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:72px}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-logo img{height:40px;width:auto}
+.nav-links{display:flex;align-items:center;gap:4px}
+.nav-links a{font-size:13px;color:#94a3b8;font-weight:500;letter-spacing:.3px;text-transform:uppercase;transition:color .2s;padding:8px 12px;border-radius:8px;white-space:nowrap}
+.nav-links a:hover{color:#F0F4FF;background:rgba(255,255,255,0.05)}
+.nav-links .active{color:#6366f1}
+.nav-links .ai-badge{background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff !important;padding:6px 14px;border-radius:8px;font-weight:600;letter-spacing:.5px}
+.nav-links .ai-badge:hover{background:linear-gradient(135deg,#4f46e5,#4338ca);transform:translateY(-1px)}
+.nav-cta{display:flex;align-items:center;gap:12px}
+.btn-login{font-size:13px;color:#94a3b8;font-weight:500;transition:color .2s;text-transform:uppercase;letter-spacing:.3px}
+.btn-login:hover{color:#F0F4FF}
+.btn-start{padding:10px 22px;background:#4f46e5;color:#fff;border-radius:10px;font-size:13px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;transition:all .2s;border:none;cursor:pointer}
+.btn-start:hover{background:#4338ca;transform:translateY(-1px);box-shadow:0 4px 15px rgba(79,70,229,0.4)}
+.mobile-toggle{display:none;background:none;border:none;color:#94a3b8;cursor:pointer;padding:8px}
+.mobile-toggle svg{width:24px;height:24px}
+
+.stars{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4;
+background-image:radial-gradient(1px 1px at 10% 20%,rgba(255,255,255,.8),transparent),radial-gradient(1px 1px at 30% 60%,rgba(255,255,255,.6),transparent),radial-gradient(1.5px 1.5px at 50% 10%,rgba(255,255,255,.9),transparent),radial-gradient(1px 1px at 70% 40%,rgba(255,255,255,.5),transparent),radial-gradient(1px 1px at 90% 80%,rgba(255,255,255,.7),transparent),radial-gradient(1.5px 1.5px at 15% 85%,rgba(255,255,255,.6),transparent),radial-gradient(1px 1px at 45% 45%,rgba(255,255,255,.4),transparent),radial-gradient(1px 1px at 80% 15%,rgba(255,255,255,.8),transparent),radial-gradient(1.5px 1.5px at 25% 35%,rgba(255,255,255,.5),transparent),radial-gradient(1px 1px at 60% 75%,rgba(255,255,255,.7),transparent);
+animation:twinkle 4s ease-in-out infinite alternate}
+@keyframes twinkle{from{opacity:.35}to{opacity:.55}}
+.nebula{position:fixed;inset:0;z-index:0;pointer-events:none;
+background:radial-gradient(80% 50% at 20% 20%,rgba(79,70,229,.12),transparent 50%),radial-gradient(60% 60% at 80% 30%,rgba(99,102,241,.08),transparent 50%),radial-gradient(90% 70% at 50% 90%,rgba(79,70,229,.06),transparent 50%)}
+
+.container{max-width:860px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+.section{margin-bottom:56px}
+
+.hero{text-align:center;padding:140px 0 56px;animation:fadeInUp .8s ease-out}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.hero-icon{width:100px;height:100px;margin:0 auto 24px;animation:float 4s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.hero h1{font-size:clamp(36px,6vw,64px);font-weight:800;line-height:1.1;
+background:linear-gradient(135deg,#F0F4FF 0%,#4f46e5 52%,#6366f1 100%);background-size:200% 200%;
+-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+animation:gradientShift 6s ease infinite;margin-bottom:16px}
+@keyframes gradientShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.hero-tagline{font-size:16px;color:#4f46e5;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:16px}
+.hero-desc{font-size:17px;color:#8892B0;max-width:680px;margin:0 auto 32px;line-height:1.7}
+.hero-badges{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:32px}
+.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(10,15,26,.8);border:1px solid rgba(136,146,176,.15);border-radius:20px;padding:6px 14px;font-size:13px;color:#8892B0}
+.dot{width:6px;height:6px;border-radius:50%}
+.dot-green{background:#22c55e}.dot-blue{background:#4f46e5}.dot-amber{background:#f59e0b}
+.hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:12px;font-size:15px;font-weight:600;transition:all .2s;cursor:pointer;border:none}
+.btn-primary{background:#4f46e5;color:#fff}
+.btn-primary:hover{background:#4338ca;transform:translateY(-1px)}
+.btn-ghost{background:rgba(10,15,26,.65);color:#F0F4FF;border:1px solid rgba(136,146,176,.15)}
+.btn-ghost:hover{border-color:rgba(136,146,176,.3);transform:translateY(-1px)}
+
+.code-block{background:#111827;border:1px solid rgba(136,146,176,.15);border-radius:12px;overflow:hidden}
+.code-header{background:rgba(0,0,0,.3);border-bottom:1px solid rgba(136,146,176,.15);padding:12px 16px;display:flex;align-items:center;gap:12px}
+.dots{display:flex;gap:6px}
+.dots span{width:10px;height:10px;border-radius:50%}
+.dot-r{background:#ef4444}.dot-y{background:#eab308}.dot-g{background:#22c55e}
+.code-content{padding:20px 24px;font-family:'SF Mono','Fira Code',monospace;font-size:14px;line-height:1.8;color:#e2e8f0;overflow-x:auto}
+.code-content .comment{color:#6b7280}
+.code-content .prompt{color:#4f46e5}
+.code-content .cmd{color:#22c55e}
+.code-content .flag{color:#f59e0b}
+.code-content .string{color:#a78bfa}
+
+.section-title{font-size:22px;font-weight:700;color:#F0F4FF;margin-bottom:24px;display:flex;align-items:center;gap:10px}
+.section-title .accent{color:#4f46e5;font-family:monospace}
+
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.feature-card{background:rgba(10,15,26,.65);border:1px solid rgba(136,146,176,.15);border-radius:14px;padding:24px;backdrop-filter:blur(12px);transition:border-color .3s,transform .2s}
+.feature-card:hover{border-color:rgba(79,70,229,.4);transform:translateY(-2px)}
+.feature-icon{width:44px;height:44px;border-radius:10px;background:rgba(79,70,229,.15);display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:22px}
+.feature-card h3{font-size:16px;font-weight:600;color:#F0F4FF;margin-bottom:8px}
+.feature-card p{font-size:13.5px;color:#5A6480;line-height:1.6}
+
+.modules-table{width:100%;border-collapse:collapse;font-size:14px}
+.modules-table th{text-align:left;padding:12px 16px;color:#F0F4FF;font-weight:600;border-bottom:1px solid rgba(136,146,176,.15);font-size:13px;text-transform:uppercase;letter-spacing:.5px}
+.modules-table td{padding:10px 16px;border-bottom:1px solid rgba(136,146,176,.08)}
+.modules-table tr:hover td{background:rgba(79,70,229,.05)}
+.modules-table .mod-name{color:#F0F4FF;font-weight:600}
+.modules-table .mod-backend{color:#4f46e5;font-size:12px}
+
+.agents-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
+.agent-card{background:rgba(10,15,26,.65);border:1px solid rgba(136,146,176,.15);border-radius:14px;padding:24px;text-align:center;transition:border-color .3s,transform .2s}
+.agent-card:hover{border-color:rgba(79,70,229,.4);transform:translateY(-2px)}
+.agent-emoji{font-size:36px;margin-bottom:12px}
+.agent-card h3{font-size:16px;font-weight:600;color:#F0F4FF;margin-bottom:6px}
+.agent-card p{font-size:13px;color:#5A6480}
+
+.workflow-diagram{background:rgba(10,15,26,.65);border:1px solid rgba(136,146,176,.15);border-radius:14px;padding:32px;text-align:center;font-family:'SF Mono',monospace;font-size:14px;color:#8892B0;line-height:2;overflow-x:auto}
+.workflow-diagram .highlight{color:#4f46e5;font-weight:600}
+
+.cta-section{text-align:center;padding:48px 0}
+.cta-section h2{font-size:32px;font-weight:800;color:#F0F4FF;margin-bottom:12px}
+.cta-section p{font-size:16px;color:#8892B0;margin-bottom:32px}
+.cta-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+
+.site-footer{background:#0f172a;border-top:1px solid rgba(136,146,176,.1);padding:64px 0 32px;margin-top:56px}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1.5fr;gap:48px;margin-bottom:48px}
+.footer-brand p{font-size:14px;color:#64748b;line-height:1.7;margin-top:16px;max-width:280px}
+.footer-col h3{color:#F0F4FF;font-weight:600;font-size:14px;margin-bottom:16px;text-transform:uppercase;letter-spacing:.5px}
+.footer-col ul{list-style:none;padding:0}
+.footer-col li{margin-bottom:10px}
+.footer-col a{font-size:14px;color:#64748b;transition:color .2s}
+.footer-col a:hover{color:#818cf8}
+.footer-bottom{border-top:1px solid #1e293b;padding-top:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.footer-bottom p{font-size:13px;color:#475569}
+.footer-bottom-links{display:flex;gap:24px}
+.footer-bottom-links a{font-size:13px;color:#475569;transition:color .2s}
+.footer-bottom-links a:hover{color:#818cf8}
+
+.mobile-menu{display:none;position:fixed;top:72px;left:0;right:0;background:rgba(15,23,42,.98);backdrop-filter:blur(16px);border-bottom:1px solid rgba(136,146,176,.1);padding:16px 24px;z-index:99}
+.mobile-menu.open{display:block}
+.mobile-menu a{display:block;padding:12px 0;font-size:14px;color:#94a3b8;border-bottom:1px solid rgba(136,146,176,.08)}
+.mobile-menu a:last-child{border:none}
+.mobile-menu a:hover{color:#F0F4FF}
+.mobile-menu .ai-link{color:#818cf8;font-weight:600}
+
+@media(max-width:768px){
+  .nav-links,.nav-cta{display:none}
+  .mobile-toggle{display:block}
+  .hero h1{font-size:32px}
+  .features-grid{grid-template-columns:1fr}
+  .agents-grid{grid-template-columns:1fr 1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+/* Dropdown menus */
+.nav-dropdown{position:relative}
+.nav-dropdown-btn{display:flex;align-items:center;gap:4px;font-size:13px;color:#94a3b8;font-weight:500;letter-spacing:.3px;text-transform:uppercase;transition:color .2s;padding:8px 12px;border-radius:8px;background:none;border:none;cursor:pointer;font-family:inherit;white-space:nowrap}
+.nav-dropdown-btn:hover{color:#F0F4FF;background:rgba(255,255,255,0.05)}
+.dropdown-menu{display:none;position:absolute;top:100%;left:0;margin-top:4px;width:280px;background:#0f172a;border:1px solid rgba(136,146,176,.15);border-radius:12px;padding:8px 0;z-index:200;box-shadow:0 8px 30px rgba(0,0,0,.4)}
+.nav-dropdown.open .dropdown-menu{display:block}
+.dropdown-menu a{display:flex;align-items:start;gap:12px;padding:10px 16px;transition:background .2s;color:#94a3b8}
+.dropdown-menu a:hover{background:rgba(79,70,229,.1);color:#F0F4FF}
+.dd-icon{font-size:18px;margin-top:2px;flex-shrink:0}
+.dd-title{font-size:13px;font-weight:600;color:#e2e8f0}
+.dd-desc{font-size:12px;color:#64748b;margin-top:2px}
+.nav-links{flex-wrap:nowrap}
+@media(max-width:768px){
+  .nav-dropdown .dropdown-menu{display:none!important}
+  .nav-dropdown.open .dropdown-menu{display:block!important;position:static;box-shadow:none;background:rgba(15,23,42,.5);margin:4px 0;border:1px solid rgba(136,146,176,.1)}
+}
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+<div class="nebula"></div>
+
+<header class="site-header" id="siteHeader">
+  <nav class="nav-inner">
+    <a href="https://www.biodockify.com" class="nav-logo">
+      <img src="/brand/logo-white.svg" alt="BioDockify">
+    </a>
+    <div class="nav-links">
+      <!-- Platform Dropdown -->
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-btn" onclick="toggleDropdown(this)">Platform <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="dropdown-menu">
+          <a href="https://studio.biodockify.com/chemdraw"><span class="dd-icon">🧬</span><div><div class="dd-title">Molecule Editor</div><div class="dd-desc">2D/3D molecule drawing with Ketcher</div></div></a>
+          <a href="https://studio.biodockify.com/ai-optimization"><span class="dd-icon">⚡</span><div><div class="dd-title">AI Optimization</div><div class="dd-desc">AI-powered molecular modification</div></div></a>
+          <a href="https://studio.biodockify.com/drug-analysis"><span class="dd-icon">💊</span><div><div class="dd-title">Drug Analysis</div><div class="dd-desc">Lipinski Ro5, MW/LogP/HBD/HBA</div></div></a>
+          <a href="https://studio.biodockify.com/docking"><span class="dd-icon">🧫</span><div><div class="dd-title">Molecular Docking</div><div class="dd-desc">Vina + GNINA + RF Score smart routing</div></div></a>
+          <a href="https://studio.biodockify.com/batch-docking"><span class="dd-icon">📈</span><div><div class="dd-title">Batch Docking</div><div class="dd-desc">Multi-ligand parallel screening</div></div></a>
+        </div>
+      </div>
+      <!-- Analysis Dropdown -->
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-btn" onclick="toggleDropdown(this)">Analysis <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="dropdown-menu">
+          <a href="https://studio.biodockify.com/pharmacophore"><span class="dd-icon">🔬</span><div><div class="dd-title">Pharmacophore</div><div class="dd-desc">3D feature generation, compound screening</div></div></a>
+          <a href="https://studio.biodockify.com/qsar"><span class="dd-icon">📊</span><div><div class="dd-title">QSAR Modeling</div><div class="dd-desc">ML training, Y-Scrambling, SHAP analysis</div></div></a>
+          <a href="https://studio.biodockify.com/admet"><span class="dd-icon">🛡</span><div><div class="dd-title">ADMET Prediction</div><div class="dd-desc">Absorption, Distribution, Metabolism, Excretion</div></div></a>
+          <a href="https://studio.biodockify.com/md-simulation"><span class="dd-icon">🖥</span><div><div class="dd-title">Molecular Dynamics</div><div class="dd-desc">OpenMM engine with GPU acceleration</div></div></a>
+          <a href="https://studio.biodockify.com/interaction-analysis"><span class="dd-icon">🔗</span><div><div class="dd-title">Interaction Analysis</div><div class="dd-desc">H-bond, pi-stacking, 2D/3D diagrams</div></div></a>
+        </div>
+      </div>
+      <!-- Tools Dropdown -->
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-btn" onclick="toggleDropdown(this)">Tools <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="dropdown-menu">
+          <a href="https://studio.biodockify.com/3d-viewer"><span class="dd-icon">🌐</span><div><div class="dd-title">3D Viewer</div><div class="dd-desc">NGL Viewer with trajectory rendering</div></div></a>
+          <a href="https://studio.biodockify.com/rmsd"><span class="dd-icon">📐</span><div><div class="dd-title">RMSD Analysis</div><div class="dd-desc">Calculation, visualization, statistics</div></div></a>
+          <a href="https://studio.biodockify.com/ligand-designer"><span class="dd-icon">⚗️</span><div><div class="dd-title">Ligand Designer</div><div class="dd-desc">Interactive modification, PubChem search</div></div></a>
+          <a href="https://studio.biodockify.com/system-health"><span class="dd-icon">💻</span><div><div class="dd-title">System Health</div><div class="dd-desc">CPU/Memory/Disk/GPU monitoring</div></div></a>
+          <a href="https://studio.biodockify.com/ai-assistant"><span class="dd-icon">🤖</span><div><div class="dd-title">AI Assistant</div><div class="dd-desc">Multi-provider LLM support</div></div></a>
+        </div>
+      </div>
+      <!-- Downloads Dropdown -->
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-btn" onclick="toggleDropdown(this)">Downloads <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="dropdown-menu">
+          <a href="https://hub.docker.com/r/tajo9128/biodockify-studio-ai"><span class="dd-icon">🐳</span><div><div class="dd-title">Docker Hub</div><div class="dd-desc">Pull the latest image</div></div></a>
+          <a href="https://github.com/tajo9128/BioDockify-Studio-AI"><span class="dd-icon">⬇</span><div><div class="dd-title">GitHub Repo</div><div class="dd-desc">Source code and releases</div></div></a>
+          <a href="https://studio.biodockify.com/quickstart"><span class="dd-icon">🚀</span><div><div class="dd-title">Quick Start Guide</div><div class="dd-desc">Get running in 2 minutes</div></div></a>
+          <a href="https://studio.biodockify.com/docs"><span class="dd-icon">📖</span><div><div class="dd-title">Documentation</div><div class="dd-desc">Full API and module docs</div></div></a>
+        </div>
+      </div>
+      <a href="https://www.biodockify.com/about">About</a>
+      <a href="https://www.biodockify.com/contact">Contact</a>
+    </div>
+    <div class="nav-cta">
+      <a href="https://www.biodockify.com/gallery" class="btn-login">Gallery</a>
+      <a href="https://www.biodockify.com/login" class="btn-login">Sign In</a>
+      <a href="https://www.biodockify.com/signup" class="btn-start">Start Free</a>
+    </div>
+    <button class="mobile-toggle" onclick="document.getElementById('mobileMenu').classList.toggle('open')">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="https://www.biodockify.com">Home</a>
+    <a href="https://studio.biodockify.com/chemdraw">Molecule Editor</a>
+    <a href="https://studio.biodockify.com/ai-optimization">AI Optimization</a>
+    <a href="https://studio.biodockify.com/docking">Molecular Docking</a>
+    <a href="https://studio.biodockify.com/batch-docking">Batch Docking</a>
+    <a href="https://studio.biodockify.com/pharmacophore">Pharmacophore</a>
+    <a href="https://studio.biodockify.com/qsar">QSAR Modeling</a>
+    <a href="https://studio.biodockify.com/admet">ADMET Prediction</a>
+    <a href="https://studio.biodockify.com/md-simulation">Molecular Dynamics</a>
+    <a href="https://studio.biodockify.com/3d-viewer">3D Viewer</a>
+    <a href="https://studio.biodockify.com/system-health">System Health</a>
+    <a href="https://studio.biodockify.com/ai-assistant">AI Assistant</a>
+    <a href="https://studio.biodockify.com/quickstart">Quick Start</a>
+    <a href="https://hub.docker.com/r/tajo9128/biodockify-studio-ai">Docker Hub</a>
+    <a href="https://github.com/tajo9128/BioDockify-Studio-AI">GitHub</a>
+    <a href="https://studio.biodockify.com/docs">Documentation</a>
+    <a href="https://www.biodockify.com/about">About</a>
+    <a href="https://www.biodockify.com/contact">Contact</a>
+    <a href="https://www.biodockify.com/gallery">Gallery</a>
+    <a href="https://www.biodockify.com/login">Sign In</a>
+    <a href="https://www.biodockify.com/signup" style="color:#6366f1;font-weight:700">Start Free</a>
+  </div>
+</header>
+
+<!-- HERO SECTION -->
+<section class="hero">
+  <div class="container">
+    <img src="/brand/icon.svg" alt="BioDockify Studio AI" class="hero-icon">
+    <h1>BioDockify Studio AI</h1>
+    <p class="hero-tagline">AI-Powered Autonomous Drug Discovery Platform</p>
+    <p class="hero-desc">19 integrated modules. 7 specialized AI crews. Smart energy-based docking with AutoDock Vina, GNINA, and RF Score. Draw molecules, optimize with AI, dock, analyze — all in one platform.</p>
+    <div class="hero-badges">
+      <span class="badge"><span class="dot dot-green"></span> Docker Ready</span>
+      <span class="badge"><span class="dot dot-blue"></span> v4.4.6</span>
+      <span class="badge"><span class="dot dot-amber"></span> 19 Modules</span>
+    </div>
+    <div class="hero-actions">
+      <a href="#quickstart" class="btn btn-primary">&#9889; Get Started</a>
+      <a href="https://github.com/tajo9128/BioDockify-Studio-AI" target="_blank" class="btn btn-ghost">View on GitHub &#8594;</a>
+    </div>
+  </div>
+</section>
+
+<!-- QUICKSTART SECTION -->
+<section class="section" id="quickstart">
+  <div class="container">
+    <h2 class="section-title"><span class="accent">&#10217;</span> Quick Start</h2>
+    <div class="code-block">
+      <div class="code-header"><div class="dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div></div>
+      <div class="code-content">
+        <span class="prompt">$</span> <span class="cmd">docker pull</span> tajo9128/biodockify-studio-ai:v4.4.6<br><br>
+        <span class="prompt">$</span> <span class="cmd">docker run</span> <span class="flag">-p</span> 8000:8000 tajo9128/biodockify-studio-ai:v4.4.6<br><br>
+        <span class="comment"># Visit http://localhost:8000</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES SECTION -->
+<section class="section" id="features">
+  <div class="container">
+    <h2 class="section-title"><span class="accent">&#10217;</span> Why BioDockify Studio AI</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🧬</div>
+        <h3>ChemDraw</h3>
+        <p>Draw and analyze molecules with 2D/3D visualization. 12 FDA-approved drugs pre-loaded for quick analysis.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>AI Optimization</h3>
+        <p>AI-powered molecular modification, bioisosteric replacement, and ring expansion for lead optimization.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧫</div>
+        <h3>Smart Docking</h3>
+        <p>Energy-based routing between AutoDock Vina, GNINA, and RF Score with automatic engine selection.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>QSAR Modeling</h3>
+        <p>Descriptor datasets, ML training, Y-Scrambling validation, SHAP analysis, and Williams Plot.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛡</div>
+        <h3>ADMET Prediction</h3>
+        <p>Absorption, Distribution, Metabolism, Excretion, and Toxicity analysis with single + batch modes.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <h3>Nanobot Commander</h3>
+        <p>Multi-agent orchestration with 7 specialized worker crews. LangGraph-style intent classification.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULES TABLE SECTION -->
+<section class="section" id="modules">
+  <div class="container">
+    <h2 class="section-title"><span class="accent">&#10217;</span> 19 Integrated Modules</h2>
+    <div style="overflow-x:auto">
+      <table class="modules-table">
+        <thead><tr><th>#</th><th>Module</th><th>Function</th><th>Backend</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td class="mod-name">ChemDraw</td><td>2D/3D molecule editor, Ketcher integration</td><td class="mod-backend">React + Ketcher</td></tr>
+          <tr><td>2</td><td class="mod-name">AI Optimization</td><td>Molecular modification, bioisosteric replacement</td><td class="mod-backend">AI-driven</td></tr>
+          <tr><td>3</td><td class="mod-name">Drug Analysis</td><td>Lipinski Ro5, MW/LogP/HBD/HBA/TPSA</td><td class="mod-backend">RDKit</td></tr>
+          <tr><td>4</td><td class="mod-name">Molecular Docking</td><td>AutoDock Vina 1.2 + GNINA + RF Score</td><td class="mod-backend">Smart routing</td></tr>
+          <tr><td>5</td><td class="mod-name">Batch Docking</td><td>Multi-ligand parallel screening, max 100</td><td class="mod-backend">Async queue</td></tr>
+          <tr><td>6</td><td class="mod-name">Pharmacophore</td><td>3D feature generation, compound screening</td><td class="mod-backend">RDKit + rdkit-pharmacophore</td></tr>
+          <tr><td>7</td><td class="mod-name">QSAR Modeling</td><td>ML training, Y-Scrambling, SHAP, Williams Plot</td><td class="mod-backend">scikit-learn</td></tr>
+          <tr><td>8</td><td class="mod-name">ADMET Prediction</td><td>Single + batch mode ADMET analysis</td><td class="mod-backend">RDKit + pkCSM</td></tr>
+          <tr><td>9</td><td class="mod-name">Molecular Dynamics</td><td>OpenMM engine, GPU, NVT/NPT/Production</td><td class="mod-backend">OpenMM + CUDA</td></tr>
+          <tr><td>10</td><td class="mod-name">3D Viewer</td><td>NGL Viewer, trajectory, surface rendering</td><td class="mod-backend">NGL Viewer</td></tr>
+          <tr><td>11</td><td class="mod-name">Interaction Analysis</td><td>2D/3D diagrams, H-bond/pi-stacking</td><td class="mod-backend">RDKit + ProBiS</td></tr>
+          <tr><td>12</td><td class="mod-name">RMSD Analysis</td><td>Calculation, visualization, statistics</td><td class="mod-backend">MDAnalysis</td></tr>
+          <tr><td>13</td><td class="mod-name">Ligand Designer</td><td>Interactive modification, PubChem search</td><td class="mod-backend">RDKit + PubChem</td></tr>
+          <tr><td>14</td><td class="mod-name">Security Monitor</td><td>Container/dependency scanning</td><td class="mod-backend">Trivy + Safety</td></tr>
+          <tr><td>15</td><td class="mod-name">System Health</td><td>CPU/Memory/Disk/GPU monitoring</td><td class="mod-backend">psutil + nvidia-smi</td></tr>
+          <tr><td>16</td><td class="mod-name">AI Assistant</td><td>Multi-provider LLM support</td><td class="mod-backend">10+ providers</td></tr>
+          <tr><td>17</td><td class="mod-name">Classroom Mode</td><td>Instructor management, assignments</td><td class="mod-backend">Custom</td></tr>
+          <tr><td>18</td><td class="mod-name">Job Queue</td><td>Persistent storage, real-time status</td><td class="mod-backend">SQLite + WebSocket</td></tr>
+          <tr><td>19</td><td class="mod-name">Nanobot Commander</td><td>7 crews, 12 intent categories</td><td class="mod-backend">LangGraph-style</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- AI CREWS SECTION -->
+<section class="section" id="crews">
+  <div class="container">
+    <h2 class="section-title"><span class="accent">&#10217;</span> 7 Specialized AI Crews</h2>
+    <div class="agents-grid">
+      <div class="agent-card">
+        <div class="agent-emoji">🧫</div>
+        <h3>Docking Crew</h3>
+        <p>AutoDock Vina, GNINA, RF Score execution and result parsing</p>
+      </div>
+      <div class="agent-card">
+        <div class="agent-emoji">📊</div>
+        <h3>QSAR Crew</h3>
+        <p>Descriptor calculation, model training, validation with Y-Scrambling</p>
+      </div>
+      <div class="agent-card">
+        <div class="agent-emoji">🖥</div>
+        <h3>MD Crew</h3>
+        <p>Molecular dynamics simulations with OpenMM and GPU acceleration</p>
+      </div>
+      <div class="agent-card">
+        <div class="agent-emoji">🛡</div>
+        <h3>ADMET Crew</h3>
+        <p>ADMET property prediction and comprehensive drug-likeness analysis</p>
+      </div>
+      <div class="agent-card">
+        <div class="agent-emoji">🔬</div>
+        <h3>Pharmacophore Crew</h3>
+        <p>3D feature generation and compound screening for binding sites</p>
+      </div>
+      <div class="agent-card">
+        <div class="agent-emoji">💻</div>
+        <h3>SysHealth Crew</h3>
+        <p>System monitoring and diagnostics for optimal performance</p>
+      </div>
+      <div class="agent-card">
+        <div class="agent-emoji">🔐</div>
+        <h3>Security Crew</h3>
+        <p>Container and dependency security scanning with Trivy and Safety</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKFLOW SECTION -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title"><span class="accent">&#10217;</span> Workflow Pipeline</h2>
+    <div class="workflow-diagram">
+      <span class="highlight">User Request</span><br>&#8595;<br>
+      <span class="highlight">Nanobot Commander</span><br>&#8595;<br>
+      <span class="highlight">Intent Classification</span> <span style="color:#5A6480">(12 categories)</span><br>&#8595;<br>
+      <span class="highlight">Crew Assignment</span> <span style="color:#5A6480">(7 specialized crews)</span><br>&#8595;<br>
+      <span class="highlight">Parallel Execution</span> <span style="color:#5A6480">(concurrent tasks)</span><br>&#8595;<br>
+      <span class="highlight">Results Aggregation</span><br>&#8595;<br>
+      <span class="highlight">Response</span> <span style="color:#5A6480">→ to User</span>
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta-section">
+  <div class="container">
+    <h2>Ready to Discover?</h2>
+    <p>Start using BioDockify Studio AI in under 2 minutes with Docker.</p>
+    <div class="cta-actions">
+      <a href="#quickstart" class="btn btn-primary">&#9889; Install Now</a>
+      <a href="https://github.com/tajo9128/BioDockify-Studio-AI" target="_blank" class="btn btn-ghost">&#11088; Star on GitHub</a>
+      <a href="https://hub.docker.com/r/tajo9128/biodockify-studio-ai" target="_blank" class="btn btn-ghost">🐳 Docker Hub</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="https://www.biodockify.com"><img src="/brand/logo.svg" alt="BioDockify" style="height:48px;filter:brightness(0) invert(1);opacity:.9"></a>
+        <p>Accelerating drug discovery with AI-powered molecular docking and analysis tools. Zero-cost, open-source, and accessible to everyone.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Platform</h3>
+        <ul>
+          <li><a href="https://www.biodockify.com/tools">Tools</a></li>
+          <li><a href="https://www.biodockify.com/tools/benchmarking">Benchmarking</a></li>
+          <li><a href="https://www.biodockify.com/pricing">Pricing (Free)</a></li>
+          <li><a href="https://www.biodockify.com/dashboard">Dashboard</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Resources</h3>
+        <ul>
+          <li><a href="https://github.com/tajo9128/BioDockify-Studio-AI">GitHub</a></li>
+          <li><a href="https://www.biodockify.com/support">Support</a></li>
+          <li><a href="https://www.biodockify.com/about">About</a></li>
+          <li><a href="https://studio.biodockify.com/docs">Documentation</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Stay Updated</h3>
+        <form class="footer-form" onsubmit="return false;">
+          <div style="position:relative">
+            <input type="email" required placeholder="Enter your email" style="width:100%;background:#1e293b;border:1px solid #334155;border-radius:8px;padding:10px 44px 10px 14px;color:#e2e8f0;font-size:13px;outline:none">
+            <button type="submit" style="position:absolute;right:4px;top:4px;background:#4f46e5;border:none;color:#fff;padding:6px 8px;border-radius:6px;cursor:pointer">
+              <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </button>
+          </div>
+          <p style="font-size:11px;color:#475569;margin-top:6px">Weekly updates on new models and tools. No spam.</p>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 BioDockify. Open Source (MIT License).</p>
+      <div class="footer-bottom-links">
+        <a href="https://www.biodockify.com/privacy">Privacy Policy</a>
+        <a href="https://www.biodockify.com/refund-policy">Refund Policy</a>
+        <a href="https://www.biodockify.com/terms">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  document.getElementById('siteHeader').classList.toggle('scrolled',window.scrollY>20);
+});
+function toggleDropdown(btn){
+  var dd=btn.closest('.nav-dropdown');
+  var wasOpen=dd.classList.contains('open');
+  document.querySelectorAll('.nav-dropdown.open').forEach(function(d){d.classList.remove('open')});
+  if(!wasOpen)dd.classList.add('open');
+}
+document.addEventListener('click',function(e){
+  if(!e.target.closest('.nav-dropdown')){
+    document.querySelectorAll('.nav-dropdown.open').forEach(function(d){d.classList.remove('open')});
+  }
+});
+</script>
+
+</body>
+</html>
