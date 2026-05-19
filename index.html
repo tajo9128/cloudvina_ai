@@ -148,6 +148,22 @@ animation:gradientShift 6s ease infinite;margin-bottom:16px}
   .footer-grid{grid-template-columns:1fr 1fr}
   .footer-bottom{flex-direction:column;text-align:center}
 }
+/* Dropdown menus */
+.nav-dropdown{position:relative}
+.nav-dropdown-btn{display:flex;align-items:center;gap:4px;font-size:13px;color:#94a3b8;font-weight:500;letter-spacing:.3px;text-transform:uppercase;transition:color .2s;padding:8px 12px;border-radius:8px;background:none;border:none;cursor:pointer;font-family:inherit;white-space:nowrap}
+.nav-dropdown-btn:hover{color:#F0F4FF;background:rgba(255,255,255,0.05)}
+.dropdown-menu{display:none;position:absolute;top:100%;left:0;margin-top:4px;width:280px;background:#0f172a;border:1px solid rgba(136,146,176,.15);border-radius:12px;padding:8px 0;z-index:200;box-shadow:0 8px 30px rgba(0,0,0,.4)}
+.nav-dropdown.open .dropdown-menu{display:block}
+.dropdown-menu a{display:flex;align-items:start;gap:12px;padding:10px 16px;transition:background .2s;color:#94a3b8}
+.dropdown-menu a:hover{background:rgba(79,70,229,.1);color:#F0F4FF}
+.dd-icon{font-size:18px;margin-top:2px;flex-shrink:0}
+.dd-title{font-size:13px;font-weight:600;color:#e2e8f0}
+.dd-desc{font-size:12px;color:#64748b;margin-top:2px}
+.nav-links{flex-wrap:nowrap}
+@media(max-width:768px){
+  .nav-dropdown .dropdown-menu{display:none!important}
+  .nav-dropdown.open .dropdown-menu{display:block!important;position:static;box-shadow:none;background:rgba(15,23,42,.5);margin:4px 0;border:1px solid rgba(136,146,176,.1)}
+}
 </style>
 </head>
 <body>
@@ -158,34 +174,82 @@ animation:gradientShift 6s ease infinite;margin-bottom:16px}
 <header class="site-header" id="siteHeader">
   <nav class="nav-inner">
     <a href="https://www.biodockify.com" class="nav-logo">
-      <img src="/brand/logo.svg" alt="BioDockify">
+      <img src="/brand/logo-white.svg" alt="BioDockify">
     </a>
     <div class="nav-links">
-      <a href="https://www.biodockify.com">Home</a>
-      <a href="https://www.biodockify.com/molecular-docking-online">Features</a>
+      <!-- Platform Dropdown -->
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-btn" onclick="toggleDropdown(this)">Platform <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="dropdown-menu">
+          <a href="https://www.biodockify.com/molecular-docking-online"><span class="dd-icon">🧫</span><div><div class="dd-title">Molecular Docking</div><div class="dd-desc">3-engine consensus (Vina + GNINA + RF)</div></div></a>
+          <a href="https://www.biodockify.com/dock/batch"><span class="dd-icon">📈</span><div><div class="dd-title">Batch Docking</div><div class="dd-desc">High-throughput virtual screening</div></div></a>
+          <a href="https://www.biodockify.com/md-simulation"><span class="dd-icon">🖥</span><div><div class="dd-title">MD Simulation</div><div class="dd-desc">RunPod GPU molecular dynamics</div></div></a>
+          <a href="https://www.biodockify.com/tools/prediction"><span class="dd-icon">🧬</span><div><div class="dd-title">Target Prediction</div><div class="dd-desc">AI-powered target identification</div></div></a>
+          <a href="https://www.biodockify.com/dashboard"><span class="dd-icon">🧠</span><div><div class="dd-title">AI Autopilot</div><div class="dd-desc">LangGraph autonomous agent</div></div></a>
+        </div>
+      </div>
+      <!-- Analysis Dropdown -->
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-btn" onclick="toggleDropdown(this)">Analysis <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="dropdown-menu">
+          <a href="https://www.biodockify.com/analysis-tools"><span class="dd-icon">🧪</span><div><div class="dd-title">Analysis Tools</div><div class="dd-desc">Toxicity, similarity, alignment & more</div></div></a>
+          <a href="https://www.biodockify.com/tools/admet"><span class="dd-icon">🛡</span><div><div class="dd-title">ADMET Predictor</div><div class="dd-desc">Drug-likeness + PAINS + risk score</div></div></a>
+          <a href="https://www.biodockify.com/tools/structure-search"><span class="dd-icon">🔍</span><div><div class="dd-title">Structure Search</div><div class="dd-desc">Molecular similarity & substructure</div></div></a>
+          <a href="https://www.biodockify.com/tools/target-explorer"><span class="dd-icon">🌐</span><div><div class="dd-title">Target Explorer</div><div class="dd-desc">UniProt + RCSB + ChEMBL lookup</div></div></a>
+          <a href="https://www.biodockify.com/tools/bioactivity"><span class="dd-icon">📈</span><div><div class="dd-title">Bioactivity</div><div class="dd-desc">Predict biological activity</div></div></a>
+        </div>
+      </div>
+      <!-- Tools Dropdown -->
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-btn" onclick="toggleDropdown(this)">Tools <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="dropdown-menu">
+          <a href="https://www.biodockify.com/3d-viewer"><span class="dd-icon">🌐</span><div><div class="dd-title">3D Viewer</div><div class="dd-desc">Interactive molecular visualization</div></div></a>
+          <a href="https://www.biodockify.com/tools/converter"><span class="dd-icon">🧫</span><div><div class="dd-title">SMILES Converter</div><div class="dd-desc">SMILES to PDBQT 3D conversion</div></div></a>
+          <a href="https://www.biodockify.com/tools/pockets"><span class="dd-icon">🔬</span><div><div class="dd-title">Pocket Detection</div><div class="dd-desc">Identify binding pockets</div></div></a>
+          <a href="https://www.biodockify.com/tools/prioritization"><span class="dd-icon">📊</span><div><div class="dd-title">Prioritization</div><div class="dd-desc">Smart compound ranking</div></div></a>
+          <a href="https://www.biodockify.com/tools/lead-optimization"><span class="dd-icon">⚡</span><div><div class="dd-title">Lead Optimization</div><div class="dd-desc">Multi-parameter scoring</div></div></a>
+          <a href="https://www.biodockify.com/tools/benchmark"><span class="dd-icon">📊</span><div><div class="dd-title">Benchmarking</div><div class="dd-desc">Validate against standard datasets</div></div></a>
+        </div>
+      </div>
+      <!-- Downloads Dropdown -->
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-btn" onclick="toggleDropdown(this)">Downloads <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="dropdown-menu">
+          <a href="https://github.com/tajo9128/BioDockify-Studio"><span class="dd-icon">⬇</span><div><div class="dd-title">Docking Studio</div><div class="dd-desc">Desktop molecular docking application</div></div></a>
+          <a href="https://ai.biodockify.com"><span class="dd-icon">🧠</span><div><div class="dd-title">Pharma Research AI</div><div class="dd-desc">Autonomous research intelligence</div></div></a>
+        </div>
+      </div>
+      <a href="https://www.biodockify.com/blog">Blog</a>
       <a href="https://www.biodockify.com/pricing">Pricing</a>
-      <a href="https://www.biodockify.com/tools">Tools</a>
-      <a href="https://ai.biodockify.com" class="ai-badge active">AI</a>
+      <a href="https://www.biodockify.com/about">About</a>
       <a href="https://www.biodockify.com/contact">Contact</a>
-      <a href="https://www.biodockify.com/dashboard">Dashboard</a>
     </div>
     <div class="nav-cta">
-      <a href="https://www.biodockify.com/login" class="btn-login">Log In</a>
-      <a href="https://www.biodockify.com/dock/batch" class="btn-start">Start Docking</a>
+      <a href="https://www.biodockify.com/gallery" class="btn-login">Gallery</a>
+      <a href="https://www.biodockify.com/login" class="btn-login">Sign In</a>
+      <a href="https://www.biodockify.com/signup" class="btn-start">Start Free</a>
     </div>
     <button class="mobile-toggle" onclick="document.getElementById('mobileMenu').classList.toggle('open')">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
     </button>
   </nav>
   <div class="mobile-menu" id="mobileMenu">
     <a href="https://www.biodockify.com">Home</a>
-    <a href="https://www.biodockify.com/molecular-docking-online">Features</a>
+    <a href="https://www.biodockify.com/molecular-docking-online">Molecular Docking</a>
+    <a href="https://www.biodockify.com/dock/batch">Batch Docking</a>
+    <a href="https://www.biodockify.com/md-simulation">MD Simulation</a>
+    <a href="https://www.biodockify.com/analysis-tools">Analysis Tools</a>
+    <a href="https://www.biodockify.com/tools/admet">ADMET Predictor</a>
+    <a href="https://www.biodockify.com/tools">All Tools</a>
     <a href="https://www.biodockify.com/pricing">Pricing</a>
-    <a href="https://www.biodockify.com/tools">Tools</a>
-    <a href="https://ai.biodockify.com" class="ai-link">AI Research &#8594;</a>
+    <a href="https://ai.biodockify.com" class="ai-link">AI Research →</a>
+    <a href="https://www.biodockify.com/blog">Blog</a>
+    <a href="https://www.biodockify.com/about">About</a>
     <a href="https://www.biodockify.com/contact">Contact</a>
-    <a href="https://www.biodockify.com/dashboard">Dashboard</a>
-    <a href="https://www.biodockify.com/dock/batch" style="color:#6366f1;font-weight:600">Start Docking</a>
+    <a href="https://www.biodockify.com/gallery">Gallery</a>
+    <a href="https://github.com/tajo9128/BioDockify-Studio">Downloads</a>
+    <a href="https://www.biodockify.com/login">Sign In</a>
+    <a href="https://www.biodockify.com/signup" style="color:#6366f1;font-weight:700">Start Free</a>
   </div>
 </header>
 
@@ -342,20 +406,23 @@ animation:gradientShift 6s ease infinite;margin-bottom:16px}
       <div class="footer-col">
         <h3>Resources</h3>
         <ul>
-          <li><a href="https://github.com/tajo9128/cloudvina" target="_blank">GitHub</a></li>
+          <li><a href="https://github.com/tajo9128/cloudvina">GitHub</a></li>
           <li><a href="https://www.biodockify.com/support">Support</a></li>
           <li><a href="https://www.biodockify.com/about">About</a></li>
-          <li><a href="https://github.com/tajo9128/BioDockify-Pharma-AI" target="_blank">Pharma AI Docs</a></li>
+          <li><a href="https://github.com/tajo9128/BioDockify-Pharma-AI">Documentation</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h3>AI Research</h3>
-        <ul>
-          <li><a href="https://ai.biodockify.com">Pharma AI Home</a></li>
-          <li><a href="https://github.com/tajo9128/BioDockify-Pharma-AI" target="_blank">GitHub Repo</a></li>
-          <li><a href="https://hub.docker.com/r/tajo9128/biodockify-pharma-ai" target="_blank">Docker Hub</a></li>
-          <li><a href="https://github.com/tajo9128/BioDockify-Pharma-AI/issues" target="_blank">Report Issue</a></li>
-        </ul>
+        <h3>Stay Updated</h3>
+        <form class="footer-form" onsubmit="return false;">
+          <div style="position:relative">
+            <input type="email" required placeholder="Enter your email" style="width:100%;background:#1e293b;border:1px solid #334155;border-radius:8px;padding:10px 44px 10px 14px;color:#e2e8f0;font-size:13px;outline:none">
+            <button type="submit" style="position:absolute;right:4px;top:4px;background:#4f46e5;border:none;color:#fff;padding:6px 8px;border-radius:6px;cursor:pointer">
+              <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </button>
+          </div>
+          <p style="font-size:11px;color:#475569;margin-top:6px">Weekly updates on new models and tools. No spam.</p>
+        </form>
       </div>
     </div>
     <div class="footer-bottom">
@@ -372,6 +439,17 @@ animation:gradientShift 6s ease infinite;margin-bottom:16px}
 <script>
 window.addEventListener('scroll',function(){
   document.getElementById('siteHeader').classList.toggle('scrolled',window.scrollY>20);
+});
+function toggleDropdown(btn){
+  var dd=btn.closest('.nav-dropdown');
+  var wasOpen=dd.classList.contains('open');
+  document.querySelectorAll('.nav-dropdown.open').forEach(function(d){d.classList.remove('open')});
+  if(!wasOpen)dd.classList.add('open');
+}
+document.addEventListener('click',function(e){
+  if(!e.target.closest('.nav-dropdown')){
+    document.querySelectorAll('.nav-dropdown.open').forEach(function(d){d.classList.remove('open')});
+  }
 });
 </script>
 
