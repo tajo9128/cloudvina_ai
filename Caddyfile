@@ -1,0 +1,47 @@
+{
+    email admin@biodockify.com
+}
+
+www.biodockify.com {
+    reverse_proxy 172.30.1.5:80
+    handle /chat-ui* {
+        reverse_proxy localhost:8080
+    }
+    handle /api/pipelines/* {
+        reverse_proxy localhost:8100
+    }
+}
+
+biodockify.com {
+    reverse_proxy 172.30.1.5:80
+    handle /chat-ui* {
+        reverse_proxy localhost:8080
+    }
+    handle /api/pipelines/* {
+        reverse_proxy localhost:8100
+    }
+}
+
+api.biodockify.com {
+    reverse_proxy localhost:8000
+}
+
+chat.biodockify.com {
+    reverse_proxy localhost:8080
+    header Access-Control-Allow-Origin *
+}
+
+ai.biodockify.com {
+    reverse_proxy localhost:3000
+    header Access-Control-Allow-Origin *
+}
+
+studio.biodockify.com {
+    reverse_proxy localhost:3001
+    header Access-Control-Allow-Origin *
+}
+
+mail.biodockify.com {
+    reverse_proxy localhost:8085
+    header Access-Control-Allow-Origin *
+}
